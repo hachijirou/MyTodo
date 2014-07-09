@@ -7,6 +7,7 @@
 //
 
 #import "TodoListViewController.h"
+#import "TodoItem.h"
 
 @interface TodoListViewController ()
 @property (nonatomic) NSMutableArray *items;
@@ -50,28 +51,33 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return self.items.count;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    // Stortyboardで設定したidentifier
+    static NSString *CellIdentifier = @"TodoListPrototypeCell";
     
-    // Configure the cell...
+    // 再利用セルを取得する
+    // 再利用セルがない場合には新しく生成されたインスタンスが返される
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier
+                                                            forIndexPath:indexPath];
+    
+    // セルを設定する
+    TodoItem *item = self.items[indexPath.row];
+    cell.textLabel.text = item.title;
+    cell.accessoryType = (item.completed ?
+                          UITableViewCellAccessoryCheckmark :
+                          UITableViewCellAccessoryNone);
     
     return cell;
 }
-*/
 
 /*
 // Override to support conditional editing of the table view.
