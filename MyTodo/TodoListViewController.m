@@ -79,6 +79,22 @@
     return cell;
 }
 
+- (NSString *)tableView:(UITableView *)tableView
+titleForHeaderInSection:(NSInteger)section
+{
+    return @"All Todos";
+}
+
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    // Todoの完了と未完了をトグルする
+    TodoItem *item = self.items[indexPath.row];
+    item.completed = !item.completed;
+    // アクセサリーの設定
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
