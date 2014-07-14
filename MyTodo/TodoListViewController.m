@@ -33,6 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -85,15 +86,19 @@ titleForHeaderInSection:(NSInteger)section
     return @"All Todos";
 }
 
-- (void)tableView:(UITableView *)tableView
-didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    // Todoの完了と未完了をトグルする
-    TodoItem *item = self.items[indexPath.row];
-    item.completed = !item.completed;
-    // アクセサリーの設定
-}
+//- (void)tableView:(UITableView *)tableView
+//didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    // Todoの完了と未完了をトグルする
+//    TodoItem *item = self.items[indexPath.row];
+//    item.completed = !item.completed;
+//    // アクセサリーの設定
+//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//    cell.accessoryType = (item.completed ?
+//                          UITableViewCellAccessoryCheckmark :
+//                          UITableViewCellAccessoryNone);
+//}
 
 /*
 // Override to support conditional editing of the table view.
@@ -143,5 +148,63 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)addItem:(id)sender
+{
+    TodoItem *newItem = [[TodoItem alloc] init];
+    newItem.title = [NSString stringWithFormat:@"TODO %ld", (long)self.items.count];
+    // テーブルの先頭に新規アイテムを挿入する
+    NSIndexPath *indexPathToInsert = [NSIndexPath indexPathForRow:0 inSection:0];
+    // データソースの更新
+    [self.items insertObject:newItem atIndex:indexPathToInsert.row];
+    // テーブルビューの更新
+    [self.tableView insertRowsAtIndexPaths:@[indexPathToInsert]
+                          withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    self.navigationItem.leftBarButtonItem.enabled = !editing;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView
+           editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (BOOL)tableView:(UITableView *)tableView
+canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView
+commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // データソースを更新
+        [self.items removeObjectAtIndex:indexPath.row];
+        // テーブルビューを更新
+        [tableView deleteRowsAtIndexPaths:@[indexPath]
+                         withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView
+moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
+      toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    TodoItem *itemToMove = self.items[sourceIndexPath.row];
+    
+    [self.items removeObjectAtIndex:sourceIndexPath.row];
+    [self.items insertObject:itemToMove atIndex:destinationIndexPath.row];
+}
+
+- (IBAction)backToList:(UIStoryboardSegue *)unwindSegue
+{
+}
 
 @end
