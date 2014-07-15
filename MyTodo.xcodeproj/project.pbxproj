@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		96CDCEFA1975E51300A3D697 /* TodoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CDCEF91975E51300A3D697 /* TodoEditViewController.m */; };
 		D51E0FA0196D2BD1005F879E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D51E0F9F196D2BD1005F879E /* Foundation.framework */; };
 		D51E0FA2196D2BD1005F879E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D51E0FA1196D2BD1005F879E /* CoreGraphics.framework */; };
 		D51E0FA4196D2BD1005F879E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D51E0FA3196D2BD1005F879E /* UIKit.framework */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		96CDCEF81975E51300A3D697 /* TodoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoEditViewController.h; sourceTree = "<group>"; };
+		96CDCEF91975E51300A3D697 /* TodoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoEditViewController.m; sourceTree = "<group>"; };
 		D51E0F9C196D2BD1005F879E /* MyTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D51E0F9F196D2BD1005F879E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D51E0FA1196D2BD1005F879E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -124,6 +127,8 @@
 				D51E0FD1196D2F89005F879E /* TodoItem.m */,
 				D51E0FD6196D43FA005F879E /* TodoListViewController.h */,
 				D51E0FD7196D43FA005F879E /* TodoListViewController.m */,
+				96CDCEF81975E51300A3D697 /* TodoEditViewController.h */,
+				96CDCEF91975E51300A3D697 /* TodoEditViewController.m */,
 			);
 			path = MyTodo;
 			sourceTree = "<group>";
@@ -255,6 +260,7 @@
 			files = (
 				D51E0FD8196D43FA005F879E /* TodoListViewController.m in Sources */,
 				D51E0FB0196D2BD1005F879E /* AppDelegate.m in Sources */,
+				96CDCEFA1975E51300A3D697 /* TodoEditViewController.m in Sources */,
 				D51E0FD2196D2F89005F879E /* TodoItem.m in Sources */,
 				D51E0FAC196D2BD1005F879E /* main.m in Sources */,
 			);
@@ -453,6 +459,7 @@
 				D51E0FCA196D2BD1005F879E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D51E0FCB196D2BD1005F879E /* Build configuration list for PBXNativeTarget "MyTodoTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +468,7 @@
 				D51E0FCD196D2BD1005F879E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
