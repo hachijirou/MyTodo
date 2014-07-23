@@ -65,4 +65,37 @@
 {
     self.todoItem.note = textView.text;
 }
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    // テキスト入力中の場合、画面遷移前に入力を終了させる
+    if ([self.titleTextField isFirstResponder]) {
+        [self.titleTextField resignFirstResponder];
+    }
+    if ([self.noteTextView isFirstResponder]) {
+        [self.noteTextView resignFirstResponder];
+    }
+    
+    // タイトルが空欄にならにようにチェック
+    if ([identifier isEqualToString:@"EditDone"]) {
+        if (self.todoItem.title == nil ||
+            self.todoItem.title.length == 0) {
+            UIAlertView *alert =
+            [[UIAlertView alloc] initWithTitle:@"Warning"
+                                       message:@"Title must not be empty."
+                                      delegate:nil
+                             cancelButtonTitle:@"OK"
+                             otherButtonTitles:nil];
+            [alert show];
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
 @end

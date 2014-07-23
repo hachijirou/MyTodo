@@ -8,9 +8,11 @@
 
 #import "TodoListViewController.h"
 #import "TodoItem.h"
+#import "TodoEditViewController.h"
 
 @interface TodoListViewController ()
 @property (nonatomic) NSMutableArray *items;
+@property (nonatomic) NSIndexPath *editingIndexPath;
 @end
 
 @implementation TodoListViewController
@@ -205,6 +207,49 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
 - (IBAction)backToList:(UIStoryboardSegue *)unwindSegue
 {
+    if ([[unwindSegue identifier] isEqualToString:@"EditDone"]) {
+        TodoEditViewController *editVIewController = unwindSegue.sourceViewController;
+        
+        if (self.editingIndexPath != nil) {
+            // データソース更新
+            [self.items replaceObjectAtIndex:self.editingIndexPath.row
+                                  withObject:editVIewController.todoItem];
+            // テーブルビューの更新
+            [self.tableView reloadRowsAtIndexPaths:@[self.editingIndexPath]
+                                  withRowAnimation:UITableViewRowAnimationFade];
+        } else { // アイテムの追加
+            NSIndexPath *indexPathToInsert =
+            [NSIndexPath indexPathForRow:0 inSection:0];
+            // データソースの更新(TodoItemの更新)
+            [self.items insertObject:editVIewController.todoItem
+                             atIndex:indexPathToInsert.row];
+            // テーブルビューの更新(行の挿入)
+            [self.tableView insertRowsAtIndexPaths:@[indexPathToInsert]
+                                  withRowAnimation:UITableViewRowAnimationFade];
+            
+        }
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UINavigationController *navigationController = segue.destinationViewController;
+    TodoEditViewController *editViewController =
+    (TodoEditViewController *)navigationController.viewControllers[0];
+    
+    if ([segue.identifier isEqualToString:@"EditItem"]) {
+        // senderは選択されたUITableViewCellなので、そこからindexPath取得
+        NSIndexPath *indexPath =
+        [self.tableView indexPathForCell:(UITableViewCell *)sender];
+        // editViewControllerに編集すべきTodoItemを渡す
+        editViewController.todoItem = self.items[indexPath.row];
+        self.editingIndexPath = indexPath;
+        
+    } else if ([segue.identifier isEqualToString:@"AddIndex"]) {
+        // editViewControllerに新しく作成したTodoItemを渡す
+        editViewController.todoItem = [[TodoItem alloc] init];
+        self.editingIndexPath = nil;
+    }
 }
 
 @end
